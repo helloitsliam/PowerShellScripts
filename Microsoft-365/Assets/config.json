@@ -1,0 +1,146 @@
+{
+  "Configuration": {
+    "Number": 100,
+    "FileExtensions": [
+      {
+        "Extension": "txt",
+        "Content": [
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "Suspendisse ullamcorper ante vitae urna pretium interdum.",
+          "Vivamus bibendum urna id odio malesuada, a varius mauris luctus.",
+          "Etiam non neque ac tortor facilisis tincidunt.",
+          "In eget tellus tristique, eleifend nisl eget, vehicula justo.",
+          "Donec ullamcorper mi vel dui consequat, id efficitur nisi bibendum.",
+          "Praesent nec odio vel neque aliquam porttitor.",
+          "Curabitur pulvinar ligula auctor, sodales ex vitae, ullamcorper nibh.",
+          "Nullam fermentum magna vitae odio finibus, nec volutpat est iaculis.",
+          "Mauris convallis mauris non turpis tempor, a bibendum sem bibendum."
+        ]
+      },
+      {
+        "Extension": "csv",
+        "Content": [
+          "Year,Month,Sales",
+          "2020,January,1000",
+          "2020,February,1200",
+          "2020,March,1100",
+          "2020,April,1300",
+          "2020,May,1500",
+          "2020,June,1800",
+          "2020,July,1900",
+          "2020,August,2100",
+          "2020,September,2000",
+          "2020,October,2300"
+        ]
+      },
+      {
+        "Extension": "xml",
+        "Content": [
+          "<root>",
+          "  <element>",
+          "    <id>1</id>",
+          "    <name>Item 1</name>",
+          "  </element>",
+          "  <element>",
+          "    <id>2</id>",
+          "    <name>Item 2</name>",
+          "  </element>",
+          "  <element>",
+          "    <id>3</id>",
+          "    <name>Item 3</name>",
+          "  </element>",
+          "  <element>",
+          "    <id>4</id>",
+          "    <name>Item 4</name>",
+          "  </element>",
+          "  <element>",
+          "    <id>5</id>",
+          "    <name>Item 5</name>",
+          "  </element>",
+          "</root>"
+        ]
+      },
+      {
+        "Extension": "doc",
+        "Content": [
+          "This is sample content for a Microsoft Word document.",
+          "Another piece of sample content for a Word document."
+        ]
+      },
+      {
+        "Extension": "docx",
+        "Content": [
+          "This is sample content for a Microsoft Word document.",
+          "Another piece of sample content for a Word document."
+        ]
+      },
+      {
+        "Extension": "pdf",
+        "Content": [
+          "This is sample content for a PDF document.",
+          "Another piece of sample content for a PDF document."
+        ]
+      },
+      {
+        "Extension": "rtf",
+        "Content": [
+          "This is sample content for a Rich Text Format document.",
+          "Another piece of sample content for a Rich Text Format document."
+        ]
+      },
+      {
+        "Extension": "odt",
+        "Content": [
+          "This is sample content for an OpenDocument Text document.",
+          "Another piece of sample content for an OpenDocument Text document."
+        ]
+      },
+      {
+        "Extension": "xls",
+        "Content": [
+          "Year\tMonth\tSales",
+          "2020\tJanuary\t1000",
+          "2020\tFebruary\t1200",
+          "2020\tMarch\t1100",
+          "2020\tApril\t1300",
+          "2020\tMay\t1500",
+          "2020\tJune\t1800",
+          "2020\tJuly\t1900",
+          "2020\tAugust\t2100",
+          "2020\tSeptember\t2000",
+          "2020\tOctober\t2300"
+        ]
+      },
+      {
+        "Extension": "xlsx",
+        "Content": [
+          "Year\tMonth\tSales",
+          "2020\tJanuary\t1000",
+          "2020\tFebruary\t1200",
+          "2020\tMarch\t1100",
+          "2020\tApril\t1300",
+          "2020\tMay\t1500",
+          "2020\tJune\t1800",
+          "2020\tJuly\t1900",
+          "2020\tAugust\t2100",
+          "2020\tSeptember\t2000",
+          "2020\tOctober\t2300"
+        ]
+      },
+      {
+        "Extension": "ppt",
+        "Content": [
+          "This is sample content for a Microsoft PowerPoint presentation.",
+          "Another piece of sample content for a PowerPoint presentation."
+        ]
+      },
+      {
+        "Extension": "pptx",
+        "Content": [
+          "This is sample content for a Microsoft PowerPoint presentation.",
+          "Another piece of sample content for a PowerPoint presentation."
+        ]
+      }
+    ]
+  }
+}
