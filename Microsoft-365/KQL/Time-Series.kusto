@@ -159,3 +159,7 @@ process_events
 | project Date, count_, series
 | render areachart kind=stacked
 
+
+
+
+use CSV dat

