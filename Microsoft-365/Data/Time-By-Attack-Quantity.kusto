@@ -1,0 +1,19 @@
+let mytable = datatable(Timestamp:datetime, Operation:string, User:string, ClientIP:string, UserAgent:string, Source:string, Target:string, ResultStatus:string, ResultError:string, ExtendedProperties:string, ID:string, Details:string)
+[
+datetime(2023-03-19T10:00:00Z),'UserLoggedIn','attacker','192.168.1.100','Mozilla/5.0 (Windows NT 10.0, Win64, x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.54 Safari/537.36','Microsoft Office 365','Microsoft 365 Tenant','Success','NULL','{ \"AttackMethod\": \"Password Spray Attack\", \"AttackStage\": \"Initial Access\" }','T1078','Initial Access',
+datetime(2023-03-19T10:02:00Z),'UserLoggedIn','attacker','192.168.1.100','PowerShell/7','Microsoft 365 Tenant','Microsoft 365 Tenant','Success','NULL','{ \"AttackMethod\": \"PowerShell Execution\", \"AttackStage\": \"Execution\" }','T1086','Execution',
+datetime(2023-03-19T10:04:00Z),'UserLoggedIn','attacker','192.168.1.100','PowerShell/7','Microsoft 365 Tenant','Azure Active Directory','Success','NULL','{ \"AttackMethod\": \"PowerShell Execution\", \"AttackStage\": \"Persistence\" }','T1106','Persistence',
+datetime(2023-03-21T10:06:00Z),'UserLoggedIn','attacker','192.168.1.100','PowerShell/7','Microsoft 365 Tenant','Exchange Online','Success','NULL','{ \"AttackMethod\": \"PowerShell Execution\", \"AttackStage\": \"Discovery\" }','T1083','Discovery',
+datetime(2023-03-21T10:08:00Z),'FileDownloaded','attacker','192.168.1.100','PowerShell/7','Exchange Online','attacker_machine','Success','NULL','{ \"AttackMethod\": \"PowerShell Execution\", \"AttackStage\": \"Collection\" }','T1030','Collection',
+datetime(2023-03-21T10:10:00Z),'MailboxRuleCreated','attacker','192.168.1.100','PowerShell/7','Exchange Online','Third-Party Email Address','Success','NULL','{ \"AttackMethod\": \"PowerShell Execution\", \"AttackStage\": \"Lateral Movement\" }','T1091','Lateral Movement',
+datetime(2023-03-22T10:12:00Z),'UserCreated','attacker','192.168.1.100','PowerShell/7','Azure Active Directory','New Admin Account','Success','NULL','{ \"AttackMethod\": \"PowerShell Execution\", \"AttackStage\": \"Privilege Escalation\" }','T1136','Privilege Escalation',
+datetime(2023-03-22T10:14:00Z),'AuditDataDeleted','attacker','192.168.1.100','PowerShell/7','Microsoft 365 Tenant','Microsoft 365 Tenant','Success','NULL','{ \"AttackMethod\": \"PowerShell Execution\", \"AttackStage\": \"Defense Evasion\" }','T1070','Defense Evasion',
+datetime(2023-03-24T10:16:00Z),'PasswordReset','attacker','192.168.1.100','PowerShell/7','Azure Active Directory','User Account','Success','NULL','{ \"AttackMethod\": \"PowerShell Execution\", \"AttackStage\": \"Credential Access\" }','T1110','Credential Access',
+datetime(2023-03-25T10:18:00Z),'PhishingEmailSent','attacker','192.168.1.100','PowerShell/7','Microsoft Teams','Other Accounts','Success','NULL','{ \"AttackMethod\": \"Phishing Email\", \"AttackStage\": \"Command and Control\" }','T1566','Command and Control'
+];
+mytable
+| sort by Timestamp asc
+| extend ExtendedProperties = parse_json(ExtendedProperties)
+| project Timestamp, Operation, User, ClientIP, Source, Target, ResultStatus, ID, AttackMethod = ExtendedProperties.AttackMethod, AttackStage = ExtendedProperties.AttackStage
+| summarize count() by bin(Timestamp, 1h), tostring(AttackStage), tostring(AttackMethod)
+| render columnchart with (title='Quantity of attacks by timestamp and type of attack', ytitle='Count', xtitle='Timestamp')

